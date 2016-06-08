@@ -18,8 +18,6 @@ other packages in that folder
 
 
 ```
-#!shell
-
 $ ./dmg-all.sh 
 ```
 
