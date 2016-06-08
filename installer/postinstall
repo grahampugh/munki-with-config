@@ -59,6 +59,6 @@ log() {
 sudo installer -pkg /Library/Management/munki-with-config/installers/munkitools-2.pkg -target /
 
 # Finally let's run the config script, and clear up after ourselves
-bash /Library/Management/munki-with-config/install_scripts/munki2_standard.sh
+sudo /Library/Management/munki-with-config/install_scripts/munki2_standard.sh
 sudo rm -rf /Library/Management/munki-with-config
 exit 0
