@@ -2,8 +2,6 @@
 
 This requires The Luggage and will package up munkitools2 and the config script into a package for distribution.
 
-*NOTE: Can only be run on the DeployStudio server as that is where the scripts and packages are located.*
-
 The Luggage is a pre-requisite for this system: (https://github.com/unixorn/luggage)
 
 * `installer` folder contains files to make a configured munki installer
@@ -26,5 +24,4 @@ $ ./dmg-all.sh
 ```
 
 
-The DMG should be put into smb://web-srv.bris.ac.uk/www/is/media/advice/operatingsystems/mac
-to make it available to end users.
+The DMG should be put into a locally accessible web server to make it available to end users.
