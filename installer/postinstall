@@ -11,55 +11,54 @@ log() {
 # Don't let it run without a connection to the munki server. This allows us to check
 # serial numbers against a csv, and ensures the client enrolls properly.
 
-SERIALS_URL="http://munki.isys.bris.ac.uk/cmdb/appleserials.csv"
+# SERIALS_URL="http://munki.isys.bris.ac.uk/cmdb/appleserials.csv"
+# CONNECTED=`curl --silent --head --location --output /dev/null --write-out '%{http_code}' $SERIALS_URL | grep '^2'`
 
-CONNECTED=`curl --silent --head --location --output /dev/null --write-out '%{http_code}' $SERIALS_URL | grep '^2'`
+# if [ -n "$CONNECTED" ]; then 
+# 	curl $SERIALS_URL -o /Library/Management/munki-with-config/install_scripts/appleserials.csv
+# else
+# 	log "Can't connect to Munki server. Aborting."
+# 	exit 1
+# fi
 
-if [ -n "$CONNECTED" ]; then 
-	curl $SERIALS_URL -o /Library/Management/munki-with-config/install_scripts/appleserials.csv
-else
-	log "Can't connect to Munki server. Aborting."
-	exit 1
-fi
-
-## First, check that this is a valid computer to install Munki on
-
-VERIFIED_INSTALL_NAME=0
-
+# First, check that this is a valid computer to install Munki on
+# 
+# VERIFIED_INSTALL_NAME=0
+# 
 # Get computer's current name
-LOCALHOSTNAME=$( scutil --get LocalHostName );
-
+# LOCALHOSTNAME=$( scutil --get LocalHostName );
+# 
 # Get computer's serial number
-SERIAL=`/usr/sbin/system_profiler SPHardwareDataType | /usr/bin/awk '/Serial\ Number\ \(system\)/ {print $NF}'`
-
+# SERIAL=`/usr/sbin/system_profiler SPHardwareDataType | /usr/bin/awk '/Serial\ Number\ \(system\)/ {print $NF}'`
+# 
 # work through file and see if serial number matches an entry
-while IFS="," read a1 a2
-do
-shopt -s nocasematch
-	[[ $a2 =~ $SERIAL ]] && VERIFIED_INSTALL_NAME=$a1 
-shopt -u nocasematch
-done </Library/Management/munki-with-config/install_scripts/appleserials.csv
-
-if [ "$VERIFIED_INSTALL_NAME" == "0" ]; then
-	log "Not matched with CMDB. Cannot proceed"
-	exit 1
-else
-	log "IT Services Tag found: $VERIFIED_INSTALL_NAME"
-fi
-
+# while IFS="," read a1 a2
+# do
+# shopt -s nocasematch
+# 	[[ $a2 =~ $SERIAL ]] && VERIFIED_INSTALL_NAME=$a1 
+# shopt -u nocasematch
+# done </Library/Management/munki-with-config/install_scripts/appleserials.csv
+# 
+# if [ "$VERIFIED_INSTALL_NAME" == "0" ]; then
+# 	log "Not matched with CMDB. Cannot proceed"
+# 	exit 1
+# else
+# 	log "IT Services Tag found: $VERIFIED_INSTALL_NAME"
+# fi
+# 
 # Still going? Let's get the computer name right
-if echo "${LOCALHOSTNAME}" | grep -iEq $VERIFIED_INSTALL_NAME; then 
-	log "${LOCALHOSTNAME} is a valid computer name, proceeding."
-else
-	log "${LOCALHOSTNAME} is not a valid computer name. Renaming to $VERIFIED_INSTALL_NAME."
-	sudo scutil --set LocalHostName "$VERIFIED_INSTALL_NAME"
-	sudo scutil --set ComputerName "$VERIFIED_INSTALL_NAME"
-fi
+# if echo "${LOCALHOSTNAME}" | grep -iEq $VERIFIED_INSTALL_NAME; then 
+# 	log "${LOCALHOSTNAME} is a valid computer name, proceeding."
+# else
+# 	log "${LOCALHOSTNAME} is not a valid computer name. Renaming to $VERIFIED_INSTALL_NAME."
+# 	sudo scutil --set LocalHostName "$VERIFIED_INSTALL_NAME"
+# 	sudo scutil --set ComputerName "$VERIFIED_INSTALL_NAME"
+# fi
 
 # Now Let's install Munki!
 sudo installer -pkg /Library/Management/munki-with-config/installers/munkitools-2.pkg -target /
 
 # Finally let's run the config script, and clear up after ourselves
-bash /Library/Management/munki-with-config/install_scripts/ds_munki2_all_optional.sh
+bash /Library/Management/munki-with-config/install_scripts/munki2_standard.sh
 sudo rm -rf /Library/Management/munki-with-config
 exit 0
