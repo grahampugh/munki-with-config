@@ -1,25 +1,51 @@
-# Munki-with-config
+munki-with-config
+-----------------
 
-This requires The Luggage and will package up munkitools2 and the config script into a package for distribution.
+Use The Luggage to create a Munki package with your organisation's configuration 
+bundled in. 
 
-The Luggage is a pre-requisite for this system: (https://github.com/unixorn/luggage)
+Operation
+---------
 
-* `installer` folder contains files to make a configured munki installer
-* `uninstaller` folder contains files to make a munki uninstaller
+1. Install The Luggage:
 
-**To make a package:** 
-Run: `make pkg`
+If you don't already have The Luggage, install it as follows (as per [@grahamgilbert]'s blog post [The Luggage: An Introduction][2]:
 
-Move the packages to their own folder out of github before committing any changes.
+{% highlight bash %}
+cd
+git clone https://github.com/unixorn/luggage.git
+{% endhighlight %}
 
-**To make the DMG:**
-Put `dmg-all.sh` in the same folder as the installer and uninstaller packages (and make sure there are no 
-other packages in that folder 
+At this point, if you don't already have git installed, you will be prompted to do so. If that happens, install git and rerun the last command. Then continue:
 
+{% highlight bash %}
+$ cd luggage
+$ make bootstrap_files
+{% endhighlight %}
 
-```
-$ ./dmg-all.sh 
-```
+2. Clone this repo:
 
+{% highlight bash %}
+cd
+git clone https://github.com/grahampugh/munki-with-config.git
+{% endhighlight %}
 
-The DMG should be put into a locally accessible web server to make it available to end users.
+3. Edit `munki_config.sh` with your organisation's configuration.
+
+{% highlight bash %}
+cd munki-with-config/installer
+edit munki-config.sh
+{% endhighlight %}
+
+4. Make the package:
+{% highlight bash %}
+make pkg
+{% endhighlight %}
+
+Optional extras
+---------------
+
+  * Run `dmg-it.sh` to package the pkg into a dmg.
+
+  * An uninstaller is also included here. Browse into the `uninstaller` folder and run `make pkg`.
+
