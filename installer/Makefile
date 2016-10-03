@@ -1,23 +1,23 @@
 USE_PKGBUILD=1
 include /usr/local/share/luggage/luggage.make
-#PB_EXTRA_ARGS+= --sign "Graham Pugh"
+#PB_EXTRA_ARGS+= --sign "Your Org"
 PB_EXTRA_ARGS+= --info "./PackageInfo"
 
 TITLE=Munki-Install
 PACKAGE_NAME=${TITLE}
-REVERSE_DOMAIN=com.grahamrpugh
-INSTALL_SCRIPT = munki2_standard.sh
-INSTALLER_PKG = munkitools-2.pkg
-INSTALLER_PKG_URL = http://munki-server:8080/repo/installers
+REVERSE_DOMAIN=com.yourorg
+INSTALL_SCRIPT = munki_config.sh
+
 PAYLOAD=\
   pack-server \
   pack-script-postinstall
 
 pack-server:
-	@sudo mkdir -p ${WORK_D}/Library/Management/munki-with-config/install_scripts
+	MUNKI_LATEST=$(curl https://api.github.com/repos/munki/munki/releases/latest | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["assets"][0]["browser_download_url"]')
 	@sudo mkdir ${WORK_D}/Library/Management/munki-with-config/installers
-	@sudo ${CP} $(INSTALL_SCRIPT) ${WORK_D}/Library/Management/munki-with-config/install_scripts/
-	@sudo curl -o ${WORK_D}/Library/Management/munki-with-config/installers/$(INSTALLER_PKG) $(INSTALLER_PKG_URL)/$(INSTALLER_PKG)
+	@sudo curl -L ${MUNKI_LATEST} -o ${WORK_D}/Library/Management/munki-latest.pkg
+	@sudo mkdir -p ${WORK_D}/Library/Management/munki-with-config/install_scripts
+	@sudo ${CP} $(INSTALL_SCRIPT) ${WORK_D}/Library/Management/munki-with-config/install_scripts/munki_config.sh
 	@sudo chown -R root:wheel ${WORK_D}/Library/Management/munki-with-config/
 	@sudo chmod -R 755 ${WORK_D}/Library/Management/munki-with-config/installers/
 	@sudo chmod -R 755 ${WORK_D}/Library/Management/munki-with-config/install_scripts/
