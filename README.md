@@ -7,40 +7,40 @@ bundled in.
 Operation
 ---------
 
-1. Install The Luggage:
+*1. Install The Luggage:*
 
 If you don't already have The Luggage, install it as follows (as per [@grahamgilbert]'s blog post [The Luggage: An Introduction][2]:
 
-{% highlight bash %}
+```bash
 cd
 git clone https://github.com/unixorn/luggage.git
-{% endhighlight %}
+```
 
 At this point, if you don't already have git installed, you will be prompted to do so. If that happens, install git and rerun the last command. Then continue:
 
-{% highlight bash %}
+```bash
 $ cd luggage
 $ make bootstrap_files
-{% endhighlight %}
+```
 
-2. Clone this repo:
+*2. Clone this repo:*
 
-{% highlight bash %}
+```bash
 cd
 git clone https://github.com/grahampugh/munki-with-config.git
-{% endhighlight %}
+```
 
-3. Edit `munki_config.sh` with your organisation's configuration.
+*3. Edit `munki_config.sh` with your organisation's configuration.*
 
-{% highlight bash %}
+```bash
 cd munki-with-config/installer
 edit munki-config.sh
-{% endhighlight %}
+```
 
-4. Make the package:
-{% highlight bash %}
+*4. Make the package:*
+```bash
 make pkg
-{% endhighlight %}
+```
 
 Optional extras
 ---------------
