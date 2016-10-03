@@ -23,21 +23,21 @@ $ cd luggage
 $ make bootstrap_files
 ```
 
-*2. Clone this repo:*
+**2. Clone this repo:**
 
 ```bash
 cd
 git clone https://github.com/grahampugh/munki-with-config.git
 ```
 
-*3. Edit `munki_config.sh` with your organisation's configuration.*
+**3. Edit `munki_config.sh` with your organisation's configuration.**
 
 ```bash
 cd munki-with-config/installer
 edit munki-config.sh
 ```
 
-*4. Make the package:*
+**4. Make the package:**
 ```bash
 make pkg
 ```
