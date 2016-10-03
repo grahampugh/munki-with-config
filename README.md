@@ -7,7 +7,7 @@ bundled in.
 Operation
 ---------
 
-*1. Install The Luggage:*
+**1. Install The Luggage:**
 
 If you don't already have The Luggage, install it as follows (as per [@grahamgilbert]'s blog post [The Luggage: An Introduction][2]:
 
