@@ -4,7 +4,7 @@
 ## The Munki Repo URL- change to suit your environment
 ## This can be commented out if your repo is at http://munki/repo
 
-MUNKI_REPO_URL="https://munki.yourcompany.com/repo"
+MUNKI_REPO_URL="https://munki.int.unic.com/repo"
 
 # Sets the URL to the Munki Repository
 defaults write /Library/Preferences/ManagedInstalls SoftwareRepoURL "$MUNKI_REPO_URL"

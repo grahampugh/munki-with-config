@@ -3,9 +3,11 @@ include /usr/local/share/luggage/luggage.make
 #PB_EXTRA_ARGS+= --sign "Your Org"
 PB_EXTRA_ARGS+= --info "./PackageInfo"
 
-TITLE=Munki-Install
+BRANDING=YourOrg
+TITLE=Munki-${BRANDING}-Install
 PACKAGE_NAME=${TITLE}
-REVERSE_DOMAIN=com.yourorg
+PACKAGE_VERSION=2.8.0.2810
+REVERSE_DOMAIN=com.${BRANDING}
 INSTALL_SCRIPT = munki_config.sh
 MUNKI_LATEST=`curl https://api.github.com/repos/munki/munki/releases/latest | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["assets"][0]["browser_download_url"]'`
 
