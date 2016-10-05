@@ -11,6 +11,25 @@ defaults write /Library/Preferences/ManagedInstalls SoftwareRepoURL "$MUNKI_REPO
 
 
 ########################
+## Basic Authentication - 
+## If using Basic Authentication on your Munki repo, set the AdditionalHttpHeaders here.
+## To set up Basic Authentication, you must enable htaccess overrides on your webserver.
+## Generate a htpasswd from the root of your repository with the command: 
+##    htpasswd -c .htpasswd munki
+## Add a .htaccess file at the root of your repository with the following content:
+##    AuthType Basic 
+##    AuthName "Munki Repository" 
+##    AuthUserFile /path/to/your/munki/repo_root/.htpasswd 
+##    Require valid-user
+## Generate an encrypted passcode with the following command:
+##    python -c 'import base64; print "Authorization: Basic %s" % base64.b64encode("USERNAME:PASSWORD")'
+## Finally, copy the generated code into the following command and uncomment it here:
+
+# defaults write /private/var/root/Library/Preferences/ManagedInstalls.plist \
+#    AdditionalHttpHeaders -array "Authorization: Basic VVNFUXXXXUU6UEFTU1dPUkQ="
+
+
+########################
 ## Run at first boot/installation:
 ## The existence of this file prods Munki to check for and install updates upon startup
 ## If you'd rather your clients waited for an hour or so, comment this out
