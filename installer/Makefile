@@ -17,7 +17,7 @@ PAYLOAD=\
 
 pack-server:
 	@sudo mkdir -p ${WORK_D}/Library/Management/munki-with-config/installers
-	@sudo /usr/bin/curl -L ${MUNKI_LATEST} -o ${WORK_D}/Library/Management/munki-with-config/munki-latest.pkg
+	@sudo /usr/bin/curl -L ${MUNKI_LATEST} -o ${WORK_D}/Library/Management/munki-with-config/installers/munki-latest.pkg
 	@sudo mkdir -p ${WORK_D}/Library/Management/munki-with-config/install_scripts
 	@sudo ${CP} $(INSTALL_SCRIPT) ${WORK_D}/Library/Management/munki-with-config/install_scripts/munki_config.sh
 	@sudo chown -R root:wheel ${WORK_D}/Library/Management/munki-with-config/
